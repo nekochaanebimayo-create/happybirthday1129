@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>お誕生日くじ　ダブルチャンスキャンペーン</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap">
 <style>
 :root{--mint:#2fd6a6;--mint-d:#14b88a;--mint-dd:#0e9a73;--mint-l:#e9fbf5;--ink:#1d2430;--sub:#6b7480;--line:#e5e9ee;
---ui:"AXIS Basic","AXIS Std","Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;--disp:"Dela Gothic One","Zen Kaku Gothic New",sans-serif;color-scheme:light}
+--ui:"DotGothic16","AXIS Basic","Hiragino Sans","Yu Gothic",sans-serif;--disp:"DotGothic16","Hiragino Sans",sans-serif;color-scheme:light}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{background:#eef1f0;font-family:var(--ui);color:var(--ink)}
@@ -24,12 +24,12 @@ canvas{image-rendering:pixelated}
 .top{position:relative;height:64px;display:flex;align-items:center;justify-content:center}
 .logo{font-family:var(--disp);font-size:16px;letter-spacing:.04em}
 .av{position:absolute;right:16px;top:12px;width:42px;height:42px;border-radius:50%;border:2.5px solid var(--mint);display:grid;place-items:center;background:#fff;overflow:hidden}
-.hero{position:relative;height:392px;overflow:hidden}
-.big{position:absolute;left:-6px;top:0;font-family:Montserrat,"Zen Kaku Gothic New",sans-serif;font-weight:800;font-size:118px;line-height:.98;letter-spacing:-.03em;color:var(--mint);white-space:nowrap;user-select:none}
+.hero{position:relative;height:300px;overflow:hidden}
+.big{position:absolute;left:10px;top:4px;font-family:"Press Start 2P","DotGothic16",monospace;font-weight:400;font-size:clamp(52px,18vw,72px);line-height:1.25;letter-spacing:0;color:#111;white-space:nowrap;user-select:none}
 .big span{display:block}
-.bubble{position:absolute;right:12px;top:204px;background:#fff;border:3px solid var(--mint-dd);border-radius:14px;padding:9px 20px;font-weight:700;font-size:15px;white-space:nowrap;box-shadow:0 4px 8px rgba(14,100,75,.25);z-index:2}
+.bubble{position:absolute;right:12px;top:128px;background:#fff;border:3px solid var(--mint-dd);border-radius:14px;padding:9px 20px;font-weight:700;font-size:15px;white-space:nowrap;box-shadow:0 4px 8px rgba(14,100,75,.25);z-index:2}
 .bubble:after{content:"";position:absolute;right:30px;bottom:-11px;width:14px;height:14px;background:#fff;border:solid var(--mint-dd);border-width:0 3px 3px 0;transform:rotate(45deg)}
-.catwrap{position:absolute;right:8px;top:270px;width:76px;z-index:2;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.catwrap{position:absolute;right:8px;top:192px;width:76px;z-index:2;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
 #cat{width:76px;height:83px;display:block;animation:pico .9s steps(1) infinite;transform-origin:50% 100%}
 @keyframes pico{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(-1.5deg)}}
 .shadow{height:6px;margin-top:-1px;background:rgba(0,0,0,.12);border-radius:50%}
@@ -89,12 +89,60 @@ input.kw::placeholder{color:#b2b9c2;font-weight:500}
 .sheet input:focus{border-color:var(--mint)}
 .row{display:flex;gap:8px}.row button{flex:1;border-radius:99px;padding:12px;font:700 14px var(--ui);cursor:pointer;border:1.5px solid var(--ink);background:#fff}
 .row .p{background:var(--ink);color:#fff}
+body{font-synthesis:none}
+*{border-radius:0!important}
+.title h1{font-family:var(--disp);font-weight:400;font-size:34px;line-height:1.4}
+.bubble,.cbub{border:3px solid #111;box-shadow:4px 4px 0 #111}
+.bubble:after,.cbub:after{border-color:#111}
+.av{border:3px solid #111;background:#fff}
+.lead b{border:2px solid #111;color:#fff}
+input.kw{border:3px solid #111;box-shadow:4px 4px 0 #111}
+input.kw:focus{border-color:#111;box-shadow:4px 4px 0 var(--mint)}
+.go{background:var(--mint);color:#111;border:3px solid #111;box-shadow:4px 4px 0 #111;font-weight:400}
+.go:active{transform:translate(4px,4px);box-shadow:0 0 0 #111}
+.bar{height:14px;border:2px solid #111;background:#fff}
+.bar i{background:repeating-linear-gradient(90deg,var(--mint) 0 8px,#fff 8px 10px)}
+.again{border-width:3px;box-shadow:4px 4px 0 currentColor}
+.sheet{border:3px solid #111;box-shadow:6px 6px 0 #111}
+.sheet input{border:2px solid #111}
+.row button{border:2px solid #111;box-shadow:3px 3px 0 #111}
+.foot button{border:2px solid #111}
+.strip{border-bottom:3px solid var(--mint)}
+/* unit: 4px (major) / 2px (minor) */
+.hero{height:250px}
+.big{font-size:clamp(48px,16vw,64px);line-height:1.2}
+.bubble{top:84px}
+.catwrap{top:150px;width:84px}
+#cat{width:84px;height:92px}
+#res .cat2{width:84px;height:92px}
+#kitty{width:84px;height:92px;right:-56px}
+#cake{width:192px;height:160px}
+#cake0{width:96px;height:80px}
+.shadow{height:4px}
+.title{margin-top:0}
+.title h1{font-size:clamp(20px,6.4vw,26px);line-height:1.5}
+.lead{margin:10px 24px 0;font-size:12px;line-height:1.7}
+.lead b{margin-bottom:6px}
+.entry{margin:16px 24px 0}
+.bubble,.cbub,.av,input.kw,.go,.sheet,.again{border-width:4px}
+.bubble:after,.cbub:after{border-width:0 4px 4px 0}
+.bar{height:16px;border-width:4px}
+.bar i{background:repeating-linear-gradient(90deg,var(--mint) 0 8px,#fff 8px 12px)}
+.strip{border-bottom-width:4px}
+.strip span{animation-duration:48s}
+.lab span{animation:none}
+.info{margin:24px 24px 0}
+.info h2{font-size:14px;font-weight:400;letter-spacing:.1em;border-bottom:4px solid #111;padding-bottom:6px}
+.info dl{display:grid;grid-template-columns:84px 1fr;font-size:12px;line-height:1.6}
+.info dt,.info dd{padding:8px 0;border-bottom:2px dotted #c9d1d8}
+.info dt:before{content:"\25A0 ";color:var(--mint)}
+@media(prefers-reduced-motion:reduce){.strip span{animation:none;padding-left:16px}#cat,#res .cat2{animation:none}}
 </style>
 </head>
 <body>
 <div class="app" id="app">
   <div class="hd">
-    <div class="top"><div class="logo">お誕生日くじ</div><div class="av"><canvas id="face" width="15" height="11" style="width:34px;height:25px"></canvas></div></div>
+    <div class="top"><div class="logo">お誕生日くじ</div><div class="av"><canvas id="face" width="15" height="11" style="width:30px;height:22px"></canvas></div></div>
     <div class="strip"><span>HAPPY BIRTHDAY ✦ DOUBLE CHANCE ✦ HAPPY BIRTHDAY ✦ DOUBLE CHANCE ✦ HAPPY BIRTHDAY ✦ DOUBLE CHANCE ✦</span></div>
   </div>
   <div class="main" id="main">
@@ -103,7 +151,7 @@ input.kw::placeholder{color:#b2b9c2;font-weight:500}
       <div class="bubble" id="say">ダブルチャンス賞に挑戦！</div>
       <div class="catwrap"><canvas id="cat" width="21" height="23"></canvas><div class="shadow"></div></div>
     </section>
-    <div class="title"><h1>お誕生日くじ<br><em>ダブルチャンス</em><br>キャンペーン</h1></div>
+    <div class="title"><h1>お誕生日くじ<br><em>ダブルチャンスキャンペーン</em></h1></div>
     <p class="lead"><b>DOUBLE CHANCE</b><br>お誕生日くじにご参加いただいた方限定！<br>キーワードを入力して、ダブルチャンス賞の抽選に参加しよう。</p>
     <div class="entry">
       <div class="lab"><label for="kw">ここにキーワードを入力</label><span>▼</span></div>
@@ -111,8 +159,9 @@ input.kw::placeholder{color:#b2b9c2;font-weight:500}
       <button class="go" id="go">抽選参加</button>
       <div class="err" id="err"></div>
     </div>
+    <section class="info"><h2>キャンペーン概要</h2><dl id="info"></dl></section>
     <ul class="notes">
-      <li>抽選へのご参加はお一人様1回までとさせていただきます。</li>
+      <li>本キャンペーンは当日限り有効です。</li>
       <li>キーワードは大文字・小文字、全角・半角どちらでも入力いただけます。</li>
       <li>賞品の内容・お渡し方法は、主催者よりご案内いたします。</li>
       <li>本キャンペーンは予告なく内容を変更・終了する場合があります。</li>
@@ -218,15 +267,22 @@ rs();addEventListener("resize",rs);
 const rnd=(a,b)=>a+Math.random()*(b-a);
 const SU=["\u2665\uFE0E","\u2666\uFE0E","\u2660\uFE0E","\u2663\uFE0E"],SC=["#e8445a","#ff8fa0","#1d2430","#1d2430"];
 function suit(){const i=Math.random()*4|0;return{s:SU[i],c:SC[i],z:rnd(14,28)}}
-function amb(top){parts.push({x:rnd(0,W),y:top?-10:rnd(-10,H),vx:rnd(-.3,.3),vy:rnd(.6,1.4),w:rnd(5,9),h:rnd(3,5),r:rnd(0,6),vr:rnd(-.02,.02),...suit(),g:0,amb:1})}
-for(let i=0;i<22;i++)amb(false);
+const STAR=["...x...","..xxx..","xxxxxxx",".xxxxx.","..xxx..",".xx.xx.",".x...x."];
+const STARS=["#ffc83d","#2fd6a6","#ff8fa0","#7cc4ff"].map(col=>{const v=document.createElement("canvas");v.width=v.height=7;const g=v.getContext("2d");g.fillStyle=col;STAR.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch=="x")g.fillRect(x,y,1,1)}));return v});
+function amb(top){parts.push({x:rnd(0,W),y:top?-10:rnd(-10,H),vx:rnd(-.3,.3),vy:rnd(.4,.9),w:rnd(5,9),h:rnd(3,5),r:rnd(0,6),vr:(Math.random()<.5?-1:1)*rnd(.04,.1),st:STARS[Math.random()*STARS.length|0],z:7*(2+(Math.random()*3|0)),g:0,amb:1})}
+const N=matchMedia("(prefers-reduced-motion: reduce)").matches?0:12;for(let i=0;i<N;i++)amb(false);
 function burst(){for(let s=0;s<2;s++)for(let i=0;i<70;i++){const l=s==0;parts.push({x:l?10:W-10,y:H-20,vx:(l?1:-1)*rnd(2,9),vy:-rnd(8,17),w:rnd(6,11),h:rnd(3,6),r:rnd(0,6),vr:rnd(-.1,.1),w:rnd(6,11),h:rnd(3,6),c:COL[Math.random()*COL.length|0],g:.3,amb:0})}}
 (function loop(){cx.clearRect(0,0,W,H);
 parts.forEach(q=>{q.vy+=q.g;if(q.g){q.vx*=.985;q.vy*=.985}q.x+=q.vx+(q.amb?Math.sin(q.y/30+q.r)*.4:0);q.y+=q.vy;q.r+=q.vr;
-cx.save();cx.translate(q.x,q.y);cx.rotate(q.r);cx.fillStyle=q.c;if(q.life!==undefined)q.life--;cx.globalAlpha=q.life!==undefined?Math.max(0,Math.min(1,q.life/18)):q.amb?.85:1;if(q.s){cx.font=q.z+"px sans-serif";cx.textAlign="center";cx.textBaseline="middle";cx.fillText(q.s,0,0)}else cx.fillRect(-q.w/2,-q.h/2,q.w,q.h*Math.abs(Math.cos(q.r*2)+.3));cx.restore()});
+cx.save();cx.translate(q.x,q.y);cx.rotate(q.r);cx.fillStyle=q.c;if(q.life!==undefined)q.life--;cx.globalAlpha=q.life!==undefined?Math.max(0,Math.min(1,q.life/18)):q.amb?.85:1;if(q.st){cx.imageSmoothingEnabled=false;cx.drawImage(q.st,-q.z/2,-q.z/2,q.z,q.z)}else if(q.s){cx.font=q.z+"px sans-serif";cx.textAlign="center";cx.textBaseline="middle";cx.fillText(q.s,0,0)}else cx.fillRect(-q.w/2,-q.h/2,q.w,q.h*Math.abs(Math.cos(q.r*2)+.3));cx.restore()});
 parts=parts.filter(q=>q.y<H+30&&(q.life===undefined||q.life>0));
-if(parts.filter(q=>q.amb).length<22)amb(true);
+if(parts.filter(q=>q.amb).length<N)amb(true);
 requestAnimationFrame(loop)})();
+
+/* ---- campaign info (空欄の項目は非表示。ここを書き換えてください) ---- */
+const INFO={"応募期間":"","賞品":"","主催":"","お問い合わせ":""};
+(function(){const rows=[["対象","お誕生日くじにご参加の方"],["参加方法","キーワードを入力して「抽選参加」をタップ"],["有効期間","当日限り有効です"],...Object.entries(INFO).filter(([,v])=>v),["あたりの方","あたり画面を主催者にご提示ください"]];
+$("info").innerHTML=rows.map(([k,v])=>"<dt>"+k+"</dt><dd>"+v+"</dd>").join("")})();
 
 /* ---- cat interaction ---- */
 const SAY=["ダブルチャンス賞に挑戦！","僕をクリック","当たるかな…？"];let si=0;
