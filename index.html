@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>お誕生日くじ　ダブルチャンスキャンペーン</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<style>
+:root{--mint:#2fd6a6;--mint-d:#14b88a;--mint-dd:#0e9a73;--mint-l:#e9fbf5;--ink:#1d2430;--sub:#6b7480;--line:#e5e9ee;
+--ui:"AXIS Basic","AXIS Std","Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;--disp:"Dela Gothic One","Zen Kaku Gothic New",sans-serif;color-scheme:light}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:#eef1f0;font-family:var(--ui);color:var(--ink)}
+.app{position:relative;width:100%;max-width:430px;height:100dvh;max-height:900px;margin:0 auto;background:#fff;overflow:hidden;
+padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 0 0 1px var(--line),0 24px 60px rgba(20,40,35,.12)}
+@media(min-width:431px){body{display:flex;align-items:center;height:100vh}.app{border-radius:36px;height:min(880px,96vh)}}
+canvas{image-rendering:pixelated}
+#cf{position:absolute;inset:0;width:100%;height:100%;z-index:70;pointer-events:none;image-rendering:auto}
+.main{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding-top:calc(94px + env(safe-area-inset-top,0px));padding-bottom:28px}
+.hd{position:absolute;left:0;right:0;top:0;z-index:20;background:#fff;padding-top:env(safe-area-inset-top,0px)}
+.strip{background:var(--ink);color:#fff;font-size:11px;letter-spacing:.18em;height:30px;overflow:hidden;white-space:nowrap;display:flex;align-items:center}
+.strip span{display:inline-block;padding-left:100%;animation:mq 22s linear infinite}
+@keyframes mq{to{transform:translateX(-100%)}}
+.top{position:relative;height:64px;display:flex;align-items:center;justify-content:center}
+.logo{font-family:var(--disp);font-size:16px;letter-spacing:.04em}
+.av{position:absolute;right:16px;top:12px;width:42px;height:42px;border-radius:50%;border:2.5px solid var(--mint);display:grid;place-items:center;background:#fff;overflow:hidden}
+.hero{position:relative;height:392px;overflow:hidden}
+.big{position:absolute;left:-6px;top:0;font-family:Montserrat,"Zen Kaku Gothic New",sans-serif;font-weight:800;font-size:118px;line-height:.98;letter-spacing:-.03em;color:var(--mint);white-space:nowrap;user-select:none}
+.big span{display:block}
+.bubble{position:absolute;right:12px;top:204px;background:#fff;border:3px solid var(--mint-dd);border-radius:14px;padding:9px 20px;font-weight:700;font-size:15px;white-space:nowrap;box-shadow:0 4px 8px rgba(14,100,75,.25);z-index:2}
+.bubble:after{content:"";position:absolute;right:30px;bottom:-11px;width:14px;height:14px;background:#fff;border:solid var(--mint-dd);border-width:0 3px 3px 0;transform:rotate(45deg)}
+.catwrap{position:absolute;right:8px;top:270px;width:76px;z-index:2;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+#cat{width:76px;height:83px;display:block;animation:pico .9s steps(1) infinite;transform-origin:50% 100%}
+@keyframes pico{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(-1.5deg)}}
+.shadow{height:6px;margin-top:-1px;background:rgba(0,0,0,.12);border-radius:50%}
+.title{text-align:center;padding:0 20px;margin-top:2px}
+.title h1{font-family:"Zen Kaku Gothic New",var(--ui);font-weight:900;font-size:31px;line-height:1.5;letter-spacing:.02em}
+.title h1 em{font-style:normal;background:linear-gradient(transparent 60%,var(--mint) 60% 90%,transparent 90%)}
+.lead{text-align:center;font-size:13px;line-height:1.85;color:#3b4450;margin:16px 30px 0}
+.lead b{display:inline-block;background:#e8445a;color:#fff;font-size:11px;letter-spacing:.14em;padding:3px 11px;border-radius:99px;margin-bottom:8px}
+.entry{margin:24px 24px 0}
+.lab{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.06em;margin-bottom:9px}
+.lab span{color:var(--mint-d);animation:nudge 1.2s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(3px)}}
+input.kw{width:100%;border:2.5px solid var(--ink);border-radius:16px;padding:16px;font:700 18px var(--ui);outline:none;background:#fff;text-align:center;letter-spacing:.06em}
+input.kw:focus{border-color:var(--mint);box-shadow:0 0 0 5px rgba(47,214,166,.2)}
+input.kw::placeholder{color:#b2b9c2;font-weight:500}
+.go{margin-top:12px;width:100%;border:0;border-radius:99px;background:var(--mint-d);color:#fff;font:900 17px var(--ui);letter-spacing:.2em;padding:17px 22px;text-align:center;cursor:pointer;box-shadow:0 5px 0 var(--mint-dd);transition:.1s}
+.go:active{transform:translateY(4px);box-shadow:0 1px 0 var(--mint-dd)}
+.err{color:#d6455d;font-size:12px;margin-top:10px;min-height:16px;text-align:center}
+.notes{margin:12px 26px 0;font-size:10.5px;line-height:1.8;color:var(--sub)}
+.notes li{list-style:none;padding-left:1.1em;text-indent:-1.1em}.notes li:before{content:"※ "}
+.foot{margin:18px 24px 0;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--sub);letter-spacing:.14em}
+.foot button{background:none;border:1px solid var(--line);border-radius:99px;font:500 11px var(--ui);padding:6px 12px;color:var(--sub);cursor:pointer}
+.ov{position:absolute;inset:0;z-index:40;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.ov.on{display:flex}
+#intro{background:#fff;z-index:55;transition:opacity .5s}
+#intro.out{opacity:0}
+#cake0{width:120px;height:100px}
+#load{background:#fff}
+.cw{position:relative}
+#cake{width:216px;height:180px}
+.ldt{font-family:var(--disp);font-size:20px;margin-top:20px}
+.bar{width:200px;height:4px;background:var(--line);border-radius:4px;margin-top:14px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--mint)}
+.pct{font-size:12px;color:var(--sub);margin-top:8px;letter-spacing:.14em}
+#kitty{position:absolute;right:-34px;bottom:0;width:63px;height:69px;display:none}
+#kitty.pop{display:block;animation:pop .5s cubic-bezier(.3,1.8,.5,1)}
+@keyframes pop{from{transform:scale(0) translateY(30px)}}
+.spk{position:absolute;pointer-events:none;font-size:16px;color:var(--mint);animation:tw .9s ease-out forwards;text-shadow:0 0 6px #fff}
+@keyframes tw{0%{transform:scale(0) rotate(0);opacity:0}30%{opacity:1}100%{transform:scale(1.4) rotate(120deg);opacity:0}}
+#res .cat2{width:76px;height:83px;margin-top:20px;animation:pico .9s steps(1) infinite}
+#res.win{background:linear-gradient(160deg,#35e0b0,#0fb083);color:#fff}
+#res.lose{background:#f4f7f6;color:var(--ink)}
+.r1{font-size:12px;letter-spacing:.3em;font-weight:700;opacity:.85}
+.r2{font-family:var(--disp);font-size:78px;line-height:1.05;margin:10px 0;letter-spacing:-.02em;animation:zoom .7s cubic-bezier(.2,1.6,.4,1)}
+.win .r2{text-shadow:0 6px 0 rgba(0,70,50,.25);animation:none}
+.ch{display:inline-block;opacity:0;animation:chin .5s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes chin{from{transform:scale(.2) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.cbub{display:none;position:relative;margin-top:22px;background:#fff;color:var(--ink);border:3px solid var(--mint-dd);border-radius:14px;padding:8px 18px;font-weight:900;font-size:16px;animation:zoom .4s cubic-bezier(.2,1.6,.4,1)}
+.cbub:after{content:"";position:absolute;left:50%;bottom:-10px;width:12px;height:12px;background:#fff;border:solid var(--mint-dd);border-width:0 3px 3px 0;transform:translateX(-50%) rotate(45deg)}
+@keyframes zoom{from{transform:scale(.2);opacity:0}}
+.r3{font-size:15px;line-height:1.8;font-weight:700}
+.again{margin-top:26px;border:2px solid currentColor;background:none;color:inherit;border-radius:99px;font:700 14px var(--ui);padding:13px 28px;cursor:pointer}
+#set{background:rgba(29,36,48,.55);z-index:60}
+.sheet{background:#fff;border-radius:22px;padding:22px;width:100%;text-align:left}
+.sheet h3{font-size:16px;margin-bottom:4px}.sheet p{font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:12px}
+.sheet input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px;font:500 15px var(--ui);margin-bottom:10px;outline:none}
+.sheet input:focus{border-color:var(--mint)}
+.row{display:flex;gap:8px}.row button{flex:1;border-radius:99px;padding:12px;font:700 14px var(--ui);cursor:pointer;border:1.5px solid var(--ink);background:#fff}
+.row .p{background:var(--ink);color:#fff}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="hd">
+    <div class="top"><div class="logo">お誕生日くじ</div><div class="av"><canvas id="face" width="15" height="11" style="width:34px;height:25px"></canvas></div></div>
+    <div class="strip"><span>HAPPY BIRTHDAY ✦ DOUBLE CHANCE ✦ HAPPY BIRTHDAY ✦ DOUBLE CHANCE ✦ HAPPY BIRTHDAY ✦ DOUBLE CHANCE ✦</span></div>
+  </div>
+  <div class="main" id="main">
+    <section class="hero">
+      <div class="big"><span>HAPPY</span><span>BIRTH-</span><span>DAY!</span></div>
+      <div class="bubble" id="say">ダブルチャンス賞に挑戦！</div>
+      <div class="catwrap"><canvas id="cat" width="21" height="23"></canvas><div class="shadow"></div></div>
+    </section>
+    <div class="title"><h1>お誕生日くじ<br><em>ダブルチャンス</em><br>キャンペーン</h1></div>
+    <p class="lead"><b>DOUBLE CHANCE</b><br>お誕生日くじにご参加いただいた方限定！<br>キーワードを入力して、ダブルチャンス賞の抽選に参加しよう。</p>
+    <div class="entry">
+      <div class="lab"><label for="kw">ここにキーワードを入力</label><span>▼</span></div>
+      <input class="kw" id="kw" type="text" enterkeyhint="done" placeholder="ここに入力" autocomplete="off" autocapitalize="off">
+      <button class="go" id="go">抽選参加</button>
+      <div class="err" id="err"></div>
+    </div>
+    <ul class="notes">
+      <li>抽選へのご参加はお一人様1回までとさせていただきます。</li>
+      <li>キーワードは大文字・小文字、全角・半角どちらでも入力いただけます。</li>
+      <li>賞品の内容・お渡し方法は、主催者よりご案内いたします。</li>
+      <li>本キャンペーンは予告なく内容を変更・終了する場合があります。</li>
+    </ul>
+    <div class="foot"><span>© BIRTHDAY KUJI</span><button id="gear">⚙ 設定</button></div>
+  </div>
+
+  <div class="ov on" id="intro"><canvas id="cake0" width="24" height="20"></canvas><div class="pct" id="ipct">LOADING</div></div>
+
+  <div class="ov" id="load">
+    <div class="cw"><canvas id="cake" width="24" height="20"></canvas><canvas id="kitty" width="21" height="23"></canvas></div>
+    <div class="ldt">抽選中…</div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="pct" id="pct">0%</div>
+  </div>
+
+  <div class="ov" id="res">
+    <div class="r1" id="r1"></div>
+    <div class="r2" id="r2"></div>
+    <div class="r3" id="r3"></div>
+    <div class="cbub" id="cbub">やった〜！</div><canvas class="cat2" id="cat2" width="21" height="23"></canvas>
+    <button class="again" id="again">もう一度</button>
+  </div>
+
+  <div class="ov" id="set">
+    <div class="sheet">
+      <div id="s1"><h3>設定</h3><p>管理用パスワードを入力してください。</p>
+        <input id="pw" type="password" placeholder="パスワード" autocomplete="off">
+        <div class="err" id="perr"></div>
+        <div class="row"><button id="sc">閉じる</button><button class="p" id="so">開く</button></div></div>
+      <div id="s2" style="display:none"><h3>キーワードの設定</h3><p>あたりになるキーワードを入力します。複数ある場合はカンマ（,）で区切ってください。</p>
+        <input id="nk" type="text" placeholder="例：HAPPY,BIRTHDAY" autocomplete="off">
+        <div class="row"><button id="sc2">キャンセル</button><button class="p" id="ss">保存</button></div></div>
+    </div>
+  </div>
+  <canvas id="cf"></canvas>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const PASS="KANA";
+let keywords="HAPPY";
+try{const v=localStorage.getItem("kuji_kw");if(v)keywords=v}catch(e){}
+const norm=s=>s.normalize("NFKC").trim().toUpperCase();
+
+/* ---- pixel cat (fluffy sitting cat) ---- */
+const CAT=[
+"..ooo.....ooo........",
+".owwwo...owwwo.......",
+".owpwwooowwpwo.......",
+".owppwwwwwppwo.......",
+".owpwwwwwwwpwo.......",
+".owpwwwwwwwpwo.......",
+".owwwwwwwwwwwo..ooo..",
+"owwwwewwwewwwwoowwwo.",
+".owwwewnwewwwoowwwwwo",
+"owwwwwwwwwwwwowwwwwwo",
+".owwwwwwwwwwwoowowwwo",
+"..oowwwwwwwwowwwowwwo",
+"...owwwwwwwwwowwowwwo",
+"..owwwwwwwwwwwowowwwo",
+".owwwwwwwwwwwwoowwwwo",
+".owwwwwwwwwwwwwowwwwo",
+".owwwwwwwwwwwwwowwwwo",
+".owwwwwwwwwwwwwwwwwo.",
+".owwwwwwwwwwwwwwwwo..",
+"..owwwwwwwwwwwwwwwo..",
+"..owwwwwwwwwwwwwwo...",
+".owwwowwwwwwwwooo....",
+"..ooo.oooooooo......."];
+const PW={w:"#fff7f5",o:"#1a1a1a",n:"#f6bdb5",e:"#1a1a1a",p:"#f8c9c4"};
+const PB={w:"#d9ecff",o:"#2b4a7c",n:"#ff9fb0",e:"#2b4a7c",p:"#ffc3cb"};
+function sprite(cv,pal,blink,rows){const c=cv.getContext("2d");c.clearRect(0,0,cv.width,cv.height);
+(rows||CAT).forEach((r,y)=>[...r.padEnd(21,".")].forEach((ch,x)=>{if(ch==".")return;let k=ch;
+if(ch=="e"&&(blink===true||(blink=="R"&&x==9)))k=y==7?"w":"o";c.fillStyle=pal[k];c.fillRect(x,y,1,1)}))}
+const sprites=[[$("cat"),PW],[$("kitty"),PW]];
+var wrinkle=false,taps=0,winkT;
+function winkLoop(){clearInterval(winkT);let on=true;sprite($("cat2"),PW,"R");winkT=setInterval(()=>{on=!on;sprite($("cat2"),PW,on?"R":false)},700)}
+function draw(b){sprites.forEach(([c,p])=>sprite(c,p,b));sprite($("face"),PW,b,CAT.slice(0,11).map(r=>r.slice(0,15)));if(wrinkle){const c=$("cat").getContext("2d");c.fillStyle="#1a1a1a";[[6,5],[8,5],[7,6]].forEach(([x,y])=>c.fillRect(x,y,1,1))}}
+draw(false);
+(function blink(){draw(true);setTimeout(()=>{draw(false);setTimeout(blink,2200+Math.random()*2200)},140)})();
+
+/* ---- pixel cake ---- */
+function cake(cv,p){const c=cv.getContext("2d");c.clearRect(0,0,24,20);
+const R=(x,y,w,h,f)=>{c.fillStyle=f;c.fillRect(x,y,w,h)};
+R(1,17,22,2,"#bdeee0");R(3,19,18,1,"#7fdcc2");
+R(3,7,18,10,"#232a36");R(4,8,16,8,"#f7d9a4");R(4,10,16,2,"#fffaf0");R(4,14,16,1,"#fffaf0");
+R(3,5,18,3,"#232a36");R(4,5,16,2,"#fff");R(6,7,2,2,"#fff");R(12,7,2,3,"#fff");R(17,7,2,2,"#fff");
+[[5,3],[10,2],[16,3]].forEach(([x,y])=>{R(x,y+1,3,3,"#e8445a");R(x+1,y,1,1,"#3fbf7f");R(x,y+1,1,1,"#ff8fa0")});
+R(20,3,1,2,"#2fd6a6");R(20,2,1,1,"#ffd54a");
+if(p>0){const t0=p*19.8;for(let x=0;x<24;x++){let t=Math.min(17,Math.max(0,t0+Math.sin(x*.9+p*6)*1.6));if(t>=1)c.clearRect(x,0,1,Math.floor(t))}}}
+function run(cv,dur,each,done){const t0=performance.now();(function s(now){const p=Math.min(1,(now-t0)/dur);cake(cv,p);each&&each(p);p<1?requestAnimationFrame(s):done&&done()})(t0)}
+
+/* ---- intro loader ---- */
+cake($("cake0"),0);
+run($("cake0"),1800,p=>$("ipct").textContent="LOADING "+Math.floor(p*100)+"%",()=>{$("intro").classList.add("out");setTimeout(()=>$("intro").classList.remove("on"),500)});
+
+/* ---- confetti ---- */
+const cf=$("cf"),cx=cf.getContext("2d");let W,H,parts=[];
+const COL=["#2fd6a6","#ffd1dc","#fff0a0","#bfe3ff","#d9c8ff","#ffc9a8","#7fe9c8"];
+function rs(){const r=$("app").getBoundingClientRect(),d=devicePixelRatio||1;W=r.width;H=r.height;cf.width=W*d;cf.height=H*d;cx.setTransform(d,0,0,d,0,0)}
+rs();addEventListener("resize",rs);
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const SU=["\u2665\uFE0E","\u2666\uFE0E","\u2660\uFE0E","\u2663\uFE0E"],SC=["#e8445a","#ff8fa0","#1d2430","#1d2430"];
+function suit(){const i=Math.random()*4|0;return{s:SU[i],c:SC[i],z:rnd(14,28)}}
+function amb(top){parts.push({x:rnd(0,W),y:top?-10:rnd(-10,H),vx:rnd(-.3,.3),vy:rnd(.6,1.4),w:rnd(5,9),h:rnd(3,5),r:rnd(0,6),vr:rnd(-.02,.02),...suit(),g:0,amb:1})}
+for(let i=0;i<22;i++)amb(false);
+function burst(){for(let s=0;s<2;s++)for(let i=0;i<70;i++){const l=s==0;parts.push({x:l?10:W-10,y:H-20,vx:(l?1:-1)*rnd(2,9),vy:-rnd(8,17),w:rnd(6,11),h:rnd(3,6),r:rnd(0,6),vr:rnd(-.1,.1),w:rnd(6,11),h:rnd(3,6),c:COL[Math.random()*COL.length|0],g:.3,amb:0})}}
+(function loop(){cx.clearRect(0,0,W,H);
+parts.forEach(q=>{q.vy+=q.g;if(q.g){q.vx*=.985;q.vy*=.985}q.x+=q.vx+(q.amb?Math.sin(q.y/30+q.r)*.4:0);q.y+=q.vy;q.r+=q.vr;
+cx.save();cx.translate(q.x,q.y);cx.rotate(q.r);cx.fillStyle=q.c;if(q.life!==undefined)q.life--;cx.globalAlpha=q.life!==undefined?Math.max(0,Math.min(1,q.life/18)):q.amb?.85:1;if(q.s){cx.font=q.z+"px sans-serif";cx.textAlign="center";cx.textBaseline="middle";cx.fillText(q.s,0,0)}else cx.fillRect(-q.w/2,-q.h/2,q.w,q.h*Math.abs(Math.cos(q.r*2)+.3));cx.restore()});
+parts=parts.filter(q=>q.y<H+30&&(q.life===undefined||q.life>0));
+if(parts.filter(q=>q.amb).length<22)amb(true);
+requestAnimationFrame(loop)})();
+
+/* ---- cat interaction ---- */
+const SAY=["ダブルチャンス賞に挑戦！","僕をクリック","当たるかな…？"];let si=0;
+const say=t=>{$("say").textContent=t};
+setInterval(()=>{if(wrinkle)return;si=(si+1)%SAY.length;say(SAY[si])},2000);
+function pop(x,y){
+  for(let i=0;i<12;i++){const a=rnd(0,6.28),v=rnd(2,6);parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-2,...suit(),z:rnd(12,22),r:rnd(0,6),vr:rnd(-.1,.1),g:.18,amb:0,life:rnd(40,60)})}
+  for(let i=0;i<10;i++){const a=rnd(0,6.28),v=rnd(1,4);parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,s:Math.random()<.5?"\u2726\uFE0E":"\u2727\uFE0E",c:Math.random()<.5?"#2fd6a6":"#ffc83d",z:rnd(10,22),r:0,vr:rnd(-.05,.05),g:.001,amb:0,life:rnd(24,40)})}
+}
+$("cat").parentNode.addEventListener("pointerdown",()=>{
+  const ap=$("app").getBoundingClientRect(),cr=$("cat").getBoundingClientRect();
+  pop(cr.left-ap.left+cr.width/2,cr.top-ap.top+cr.height/2);
+  if(wrinkle){wrinkle=false;taps=0;draw(false);say(SAY[si]);return}
+  if(++taps>=3){wrinkle=true;taps=0;draw(false);say("ちょっとしつこいかな…")}
+});
+
+/* ---- flow ---- */
+let busy=false;
+function sparkle(){const s=document.createElement("span");s.className="spk";s.textContent=Math.random()<.5?"✦":"✧";
+s.style.left=rnd(-30,230)+"px";s.style.top=rnd(-20,190)+"px";s.style.color=Math.random()<.5?"#2fd6a6":"#ffc83d";s.style.fontSize=rnd(12,24)+"px";
+$("load").querySelector(".cw").appendChild(s);setTimeout(()=>s.remove(),900)}
+$("go").onclick=()=>{
+  $("kw").blur();const v=$("kw").value;if(!norm(v)){$("err").textContent="キーワードを入力してください";$("kw").focus();return}
+  if(busy)return;busy=true;$("err").textContent="";
+  const win=keywords.split(/[,、，]/).map(norm).filter(Boolean).includes(norm(v));
+  $("load").classList.add("on");$("kitty").className="";cake($("cake"),0);
+  let sp=win?setInterval(sparkle,140):0;
+  run($("cake"),2000+Math.random()*1000,p=>{$("bar").style.width=p*100+"%";$("pct").textContent=Math.floor(p*100)+"%"},()=>{
+    clearInterval(sp);if(win)$("kitty").className="pop";setTimeout(()=>show(win),win?900:500)});
+};
+const LOSE=["残念…今回ははずれでした。<br>またのチャレンジをお待ちしています。",
+"おしい…！今回ははずれでした。<br>次はきっと当たるはず！",
+"ざんねん…はずれでした。<br>気を取り直して、もう一度どうぞ。",
+"今回はご縁がなかったみたい。<br>でも、お誕生日おめでとう！",
+"ありゃ、はずれちゃいました。<br>運は巡るもの。また挑戦してね。",
+"はずれでした…！<br>でも、あなたの一年が素敵でありますように。",
+"今回ははずれ。<br>でも、ケーキはおいしかったよね？",
+"ざんねん！はずれです。<br>ハッピーバースデー、また来年も！",
+"はずれちゃった…。<br>また遊びに来てくれるのを待ってます。"];let li=0;
+function show(win){
+  const r=$("res");r.className="ov on "+(win?"win":"lose");
+  $("r1").textContent=win?"DOUBLE CHANCE":"TRY AGAIN";
+  $("r2").innerHTML=win?[..."あたり！"].map((c,i)=>'<span class="ch" style="animation-delay:'+i*.38+'s">'+c+'</span>').join(""):"はずれ";
+  $("r3").innerHTML=win?"おめでとうございます！<br>このあたり画面を主催者に見せてね。":LOSE[li=(li+1+(Math.random()*(LOSE.length-1)|0))%LOSE.length];
+  $("r2").style.animation="none";void $("r2").offsetWidth;$("r2").style.animation="";
+  $("cat2").style.display=win?"":"none";$("cbub").style.display="none";if(win){winkLoop();setTimeout(()=>{if(!$("res").classList.contains("win")||!$("res").classList.contains("on"))return;burst();$("cbub").style.display="block"},1150)}$("load").classList.remove("on");
+}
+$("again").onclick=()=>{clearInterval(winkT);$("res").className="ov";$("kw").value="";busy=false};
+$("kw").addEventListener("keydown",e=>{if(e.key=="Enter"){e.preventDefault();$("kw").blur();$("go").click()}});
+document.querySelectorAll("input").forEach(i=>i.addEventListener("keydown",e=>{if(e.key=="Enter")i.blur()}));
+document.addEventListener("pointerdown",e=>{const a=document.activeElement;if(a&&a.tagName=="INPUT"&&!e.target.closest("input"))a.blur()});
+
+/* ---- settings ---- */
+const sv=on=>$("set").classList.toggle("on",on);
+$("gear").onclick=()=>{$("pw").value="";$("perr").textContent="";$("s1").style.display="";$("s2").style.display="none";sv(true)};
+$("sc").onclick=$("sc2").onclick=()=>sv(false);
+$("so").onclick=()=>{if($("pw").value.trim().toUpperCase()===PASS){$("s1").style.display="none";$("s2").style.display="";$("nk").value=keywords}else $("perr").textContent="パスワードが違います"};
+$("ss").onclick=()=>{const v=$("nk").value.trim();if(!v)return;keywords=v;try{localStorage.setItem("kuji_kw",v)}catch(e){}sv(false)};
+</script>
+</body>
+</html>
